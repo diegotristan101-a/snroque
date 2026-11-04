@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://diegotristan101-a.github.io/snroque/sitemap.xml

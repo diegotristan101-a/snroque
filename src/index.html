@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Quesos Sn Roque | Quesos de verdad, hechos con 100% leche</title>
+<meta name="description" content="Quesos Sn Roque (San Roque): asadero, Oaxaca, panela, ranchero, mozzarella, cremas y cajeta hechos con 100% leche en San Roque de Montes, Guanajuato. Pide por WhatsApp o surte tu negocio.">
+<link rel="canonical" href="{{SITE}}">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#00843D">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#003F1D">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Quesos Sn Roque">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="{{SITE}}">
+<meta property="og:title" content="Quesos Sn Roque | Quesos de verdad, hechos con 100% leche">
+<meta property="og:description" content="Asadero, Oaxaca, panela, ranchero, cremas y cajeta hechos con 100% leche en San Roque de Montes, Guanajuato.">
+<meta property="og:image" content="{{SITE}}assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Quesos Sn Roque, quesos de verdad hechos con 100% leche">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="assets/img/rueda-m.webp" imagesrcset="assets/img/rueda-m-sm.webp 692w, assets/img/rueda-m.webp 1384w" imagesizes="76vh" media="(max-width:859.98px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/rueda-t.webp" imagesrcset="assets/img/rueda-t-sm.webp 745w, assets/img/rueda-t.webp 1490w" imagesizes="97vh" media="(min-width:860px) and (max-width:1199.98px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/rueda-d.webp" imagesrcset="assets/img/rueda-d-sm.webp 1037w, assets/img/rueda-d-md.webp 1400w, assets/img/rueda-d.webp 2075w" imagesizes="115vh" media="(min-width:1200px)" fetchpriority="high">
+<link rel="preload" href="assets/fonts/latina-essential-heavy.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/latina-essential-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/nunito.woff2" as="font" type="font/woff2" crossorigin>
+<style>{{CSS}}</style>
+<script type="application/ld+json">{{JSONLD}}</script>
+</head>
+<body>
+{{BODY}}
+<script type="module">
+// La página se arma cuando ya se pintó el inicio (rueda y título): así aparece rápido también en celulares.
+// Los botones de WhatsApp y el menú funcionan desde el primer momento porque son ligas normales.
+let ya=false;
+const go=()=>{ if(ya) return; ya=true; requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(()=>import('./{{JS}}'),0))); };
+if(document.readyState==='complete') go(); else { addEventListener('load',go,{once:true}); setTimeout(go,4000); }
+</script>
+</body>
+</html>

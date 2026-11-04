@@ -1,0 +1,19 @@
+{
+  "name": "quesos-sn-roque-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing de Quesos Sn Roque (Famo Alimentos): queso 3D, proceso en video, familias de producto y alta de clientes por WhatsApp.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs",
+    "lighthouse": "node scripts/lighthouse.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "gsap": "3.12.5",
+    "lenis": "1.1.13",
+    "three": "0.169.0",
+    "lighthouse": "^12.8.2"
+  }
+}

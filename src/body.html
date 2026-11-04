@@ -1,0 +1,345 @@
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.25" fill="currentColor"/></symbol>
+  <symbol id="i-tt" viewBox="0 0 24 24"><path fill="currentColor" d="M16.6 2.8c.3 2.3 1.7 3.8 4 4v3.2c-1.5.1-2.8-.4-4-1.1v6c0 3.4-2.6 6-5.9 6A5.9 5.9 0 0 1 4.8 15c0-3.6 3.1-6.3 6.7-5.8v3.3c-1.7-.4-3.4.8-3.4 2.6 0 1.5 1.2 2.7 2.7 2.7 1.6 0 2.7-1.2 2.7-3V2.8h3.1z"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24"><path fill="currentColor" d="M13.6 21.5v-8.2h2.8l.4-3.3h-3.2V7.9c0-.9.3-1.6 1.6-1.6h1.7V3.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V10H7.4v3.3h2.8v8.2h3.4z"/></symbol>
+</svg>
+
+<div id="bg" aria-hidden="true"></div>
+<canvas id="gl" aria-hidden="true"></canvas>
+
+<header class="nav" id="nav">
+  <a class="nav-brand" href="#inicio"><img src="assets/img/logo-srq-nav-1x.webp" srcset="assets/img/logo-srq-nav-1x.webp 1x, assets/img/logo-srq-nav-2x.webp 2x, assets/img/logo-srq-nav.webp 3x" alt="" width="47" height="50"><span><b>Quesos Sn Roque</b><small>Una marca de Famo Alimentos</small></span></a>
+  <nav class="nav-links" aria-label="Secciones">
+    <a href="#proceso">Cómo se hace</a>
+    <a href="#familias">Familias</a>
+    <a href="#recetas">Recetas</a>
+    <a href="#negocio">Para tu negocio</a>
+  </nav>
+  <div class="nav-icons" id="nav-icons">
+    <a class="soc soc-ig" id="nav-ig" href="https://www.instagram.com/quesosnroque/" target="_blank" rel="noopener" aria-label="Instagram @quesosnroque" title="Instagram"><svg aria-hidden="true"><use href="#i-ig"/></svg></a>
+    <a class="soc soc-tt" id="nav-tt" href="https://www.tiktok.com/@quesos.snroque" target="_blank" rel="noopener" aria-label="TikTok @quesos.snroque" title="TikTok"><svg aria-hidden="true"><use href="#i-tt"/></svg></a>
+    <a class="soc soc-fb" id="nav-fb" href="https://www.facebook.com/profile.php?id=61567377028323" target="_blank" rel="noopener" aria-label="Facebook Quesos Sn Roque" title="Facebook"><svg aria-hidden="true"><use href="#i-fb"/></svg></a>
+    <a class="soc soc-wa" id="nav-wa" href="https://wa.me/5214772312260?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20de%20Quesos%20Sn%20Roque" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp" title="WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg></a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ INICIO: el queso 3D se abre con el scroll ============ -->
+  <div class="pin-inicio" id="inicio-pin">
+  <section class="hero" id="inicio">
+    <picture class="hero-poster" aria-hidden="true">
+      <source media="(min-width:1200px)" srcset="assets/img/rueda-d-sm.webp 1037w, assets/img/rueda-d-md.webp 1400w, assets/img/rueda-d.webp 2075w" sizes="115vh" width="2075" height="812">
+      <source media="(min-width:860px)" srcset="assets/img/rueda-t-sm.webp 745w, assets/img/rueda-t.webp 1490w" sizes="97vh" width="1490" height="679">
+      <img src="assets/img/rueda-m.webp" srcset="assets/img/rueda-m-sm.webp 692w, assets/img/rueda-m.webp 1384w" sizes="76vh" width="1384" height="607" alt="" fetchpriority="high" decoding="async">
+    </picture>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <h1 class="hero-h1">Quesos de verdad, hechos con 100% leche.</h1>
+        <p class="hero-sub">En Quesos Sn Roque llevamos el auténtico sabor del queso a tu mesa. Somos una marca 100% de leche, con una gran variedad de quesos y productos lácteos. <b>¡Sn Roque, quesos de verdad!</b></p>
+        <div class="hero-cta">
+          <a class="btn btn-wa" id="hero-wa" href="https://wa.me/5214772312260?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20de%20Quesos%20Sn%20Roque" target="_blank" rel="noopener"><span class="wa-badge" aria-hidden="true"><svg><use href="#i-wa"/></svg></span>Pedir por WhatsApp</a>
+          <a class="btn btn-ghost" href="#familias">Conoce los quesos</a>
+        </div>
+      </div>
+      <div class="hero-static" aria-hidden="true"><img src="assets/prod/020.webp" alt="" width="820" height="820" loading="lazy" decoding="async"></div>
+    </div>
+    <img class="hero-sello" src="assets/img/sello-leche-sm.webp" srcset="assets/img/sello-leche-sm.webp 220w, assets/img/sello-leche.webp 421w" sizes="(max-width:860px) 92px, 160px" alt="" aria-hidden="true" width="421" height="600" decoding="async">
+    <div class="hero-caps" aria-hidden="true">
+      <p class="hero-cap" data-cap="0"><span class="cap-k">Pasta hilada</span>lisa, elástica y de sabor suave.</p>
+      <p class="hero-cap" data-cap="1"><span class="cap-k">Leche entera</span>pasteurizada de vaca. Nada más.</p>
+      <p class="hero-cap" data-cap="2"><span class="cap-k">Hecho en</span>San Roque de Montes, Guanajuato.</p>
+    </div>
+    <div class="scroll-hint" aria-hidden="true"><span class="hint-wheel"><span></span></span><span>Desliza para abrir el queso</span></div>
+  </section>
+  </div>
+
+  <!-- ============ PROCESO: video de la planta a pantalla completa ============ -->
+  <section class="proceso" id="proceso" aria-label="De la leche al queso">
+    <div class="proc-media" aria-hidden="true">
+      <video class="on" data-i="0" data-src="assets/proceso/e1.mp4" data-poster="assets/proceso/e1.webp" muted loop playsinline preload="none"></video>
+      <video data-i="1" data-src="assets/proceso/e2.mp4" data-poster="assets/proceso/e2.webp" muted loop playsinline preload="none"></video>
+      <video data-i="2" data-src="assets/proceso/e3.mp4" data-poster="assets/proceso/e3.webp" muted loop playsinline preload="none"></video>
+      <video data-i="3" data-src="assets/proceso/e4.mp4" data-poster="assets/proceso/e4.webp" muted loop playsinline preload="none"></video>
+    </div>
+    <div class="proc-tint" aria-hidden="true"></div>
+    <div class="proc-ovl">
+      <p class="proc-k">De la leche al queso</p>
+      <div class="proc-num" aria-hidden="true"><span id="proc-n">1</span><small>/4</small></div>
+      <ol class="pasos">
+        <li class="paso on" data-paso="0"><h2>Leche</h2><p>Llega en nuestras pipas, leche entera de vaca, y se guarda en silos. Todo empieza aquí.</p></li>
+        <li class="paso" data-paso="1"><h2>Cuajada</h2><p>La leche cuaja y se separa del suero. Aquí nace la pasta del queso.</p></li>
+        <li class="paso" data-paso="2"><h2>Hilado</h2><p>La pasta se calienta y se estira hasta formar la hebra del asadero y las madejas del Oaxaca.</p></li>
+        <li class="paso" data-paso="3"><h2>Empaque</h2><p>Se empaca en nuestra planta: panela, cremas, rallados y 42 presentaciones para la casa y el negocio.</p></li>
+      </ol>
+      <nav class="proc-rail" aria-label="Pasos del proceso">
+        <button type="button" class="on" data-i="0"><i></i><span>Leche</span></button>
+        <button type="button" data-i="1"><i></i><span>Cuajada</span></button>
+        <button type="button" data-i="2"><i></i><span>Hilado</span></button>
+        <button type="button" data-i="3"><i></i><span>Empaque</span></button>
+      </nav>
+      <p class="proc-tag">En nuestra planta · San Roque de Montes, Guanajuato</p>
+    </div>
+  </section>
+
+  <!-- ============ FAMILIAS ============ -->
+  <section class="familias" id="familias">
+    <div class="familias-head">
+      <h2 class="h2">Nuestros quesos</h2>
+      <p class="lead">Diez familias hechas con la misma leche, cada una con el color de su empaque. Toca una para ver todas sus presentaciones.</p>
+    </div>
+    <div class="fam-wrap">
+      <div class="fam-track" id="fam-track"></div>
+    </div>
+    <div class="fam-prog" aria-hidden="true"><span></span></div>
+  </section>
+
+  <!-- ============ RECETAS ============ -->
+  <section class="recetas" id="recetas">
+    <div class="recetas-inner">
+      <div class="recetas-head">
+        <h2 class="h2">Recetas</h2>
+        <p class="lead">Nuestra cocina con quesos Sn Roque. Los videos corren solos en silencio; toca la bocina para escucharlos.</p>
+      </div>
+      <div class="reels">
+        <figure class="reel" data-fam="oaxaca">
+          <div class="reel-frame">
+            <video data-src="assets/video/oaxaca.mp4" data-poster="assets/video/oaxaca.webp" muted loop playsinline preload="none" width="480" height="854" aria-label="Video: queso Oaxaca Sn Roque deshebrado, en quesadilla y con su empaque"></video>
+            <button class="reel-snd" type="button" aria-pressed="false" aria-label="Activar sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="on" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/><path class="off" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m16.5 9.5 5 5m0-5-5 5"/></svg></button>
+          </div>
+          <figcaption><b>Oaxaca de hebra</b><span>deshebrado y en quesadilla</span><button class="reel-go" type="button" data-fam="oaxaca">Ver Oaxaca</button></figcaption>
+        </figure>
+        <figure class="reel" data-fam="asadero">
+          <div class="reel-frame">
+            <video data-src="assets/video/asadero.mp4" data-poster="assets/video/asadero.webp" muted loop playsinline preload="none" width="480" height="854" aria-label="Video: asadero Sn Roque deshebrado y fundido en sartén"></video>
+            <button class="reel-snd" type="button" aria-pressed="false" aria-label="Activar sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="on" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/><path class="off" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m16.5 9.5 5 5m0-5-5 5"/></svg></button>
+          </div>
+          <figcaption><b>Asadero fundido</b><span>deshebrado y al sartén</span><button class="reel-go" type="button" data-fam="asadero">Ver Asadero</button></figcaption>
+        </figure>
+        <figure class="reel" data-fam="panela">
+          <div class="reel-frame">
+            <video data-src="assets/video/panela.mp4" data-poster="assets/video/panela.webp" muted loop playsinline preload="none" width="480" height="854" aria-label="Video: queso panela Sn Roque rebanado, asado y en ensalada"></video>
+            <button class="reel-snd" type="button" aria-pressed="false" aria-label="Activar sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="on" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/><path class="off" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m16.5 9.5 5 5m0-5-5 5"/></svg></button>
+          </div>
+          <figcaption><b>Panela fresca</b><span>rebanada, asada y en ensalada</span><button class="reel-go" type="button" data-fam="panela">Ver Panela</button></figcaption>
+        </figure>
+        <figure class="reel" data-fam="ranchero">
+          <div class="reel-frame">
+            <video data-src="assets/video/ranchero.mp4" data-poster="assets/video/ranchero.webp" muted loop playsinline preload="none" width="480" height="854" aria-label="Video: queso ranchero Sn Roque rebanado y desmoronado"></video>
+            <button class="reel-snd" type="button" aria-pressed="false" aria-label="Activar sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="on" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/><path class="off" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m16.5 9.5 5 5m0-5-5 5"/></svg></button>
+          </div>
+          <figcaption><b>Ranchero fresco</b><span>rebanado y desmoronado</span><button class="reel-go" type="button" data-fam="ranchero">Ver Ranchero</button></figcaption>
+        </figure>
+        <figure class="reel" data-fam="mozzarella">
+          <div class="reel-frame">
+            <video data-src="assets/video/pizza.mp4" data-poster="assets/video/pizza.webp" muted loop playsinline preload="none" width="480" height="854" aria-label="Video: pizza casera con Mozzarella Sn Roque"></video>
+            <button class="reel-snd" type="button" aria-pressed="false" aria-label="Activar sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="on" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/><path class="off" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m16.5 9.5 5 5m0-5-5 5"/></svg></button>
+          </div>
+          <figcaption><b>Pizza casera</b><span>con Mozzarella pizzero Sn Roque</span><button class="reel-go" type="button" data-fam="mozzarella">Ver Mozzarella</button></figcaption>
+        </figure>
+        <figure class="reel" data-fam="asadero">
+          <div class="reel-frame">
+            <video data-src="assets/video/chiles.mp4" data-poster="assets/video/chiles.webp" muted loop playsinline preload="none" width="480" height="854" aria-label="Video: chiles rellenos con queso y crema Sn Roque"></video>
+            <button class="reel-snd" type="button" aria-pressed="false" aria-label="Activar sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="on" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/><path class="off" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m16.5 9.5 5 5m0-5-5 5"/></svg></button>
+          </div>
+          <figcaption><b>Chiles rellenos</b><span>con queso y crema Sn Roque</span><button class="reel-go" type="button" data-fam="asadero">Ver Asadero</button></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 100% LECHE ============ -->
+  <section class="leche" id="leche">
+    <div class="leche-inner">
+      <div class="leche-sello"><img src="assets/img/sello-leche.webp" srcset="assets/img/sello-leche-sm.webp 220w, assets/img/sello-leche.webp 421w" sizes="(max-width:860px) 46vw, 300px" alt="Sello 100% leche, quesos de verdad" width="421" height="600" loading="lazy" decoding="async"></div>
+      <div class="leche-copy">
+        <h2 class="h2">Hechos con 100% leche</h2>
+        <p class="lead">El sello 100% LECHE va en cada empaque de Sn Roque. Es queso de verdad, hecho con leche entera pasteurizada de vaca, en San Roque de Montes, Guanajuato.</p>
+        <ul class="leche-list">
+          <li><strong>Leche entera de vaca</strong><span>pasteurizada, como base de cada queso y cada crema.</span></li>
+          <li><strong>42 presentaciones</strong><span>en diez familias, de 150 g a 24 kg.</span></li>
+          <li><strong>Hecho en Guanajuato</strong><span>y repartido en ruta hasta tu tienda o tu cocina.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARA TU NEGOCIO (la camioneta recorre la ruta) ============ -->
+  <section class="negocio" id="negocio">
+    <div class="negocio-head">
+      <h2 class="h2">Para tu negocio</h2>
+      <p class="lead">Te surtimos en ruta: tiendas, taquerías, pizzerías y cocinas. Escríbenos y un vendedor te visita.</p>
+    </div>
+    <div class="ruta" id="ruta" aria-hidden="true">
+      <div class="ruta-scene" id="ruta-scene">
+        <svg class="ruta-svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid meet">
+          <path id="ruta-path" class="ruta-road" d="M-30 238C110 238 170 172 300 170S470 246 610 236 790 150 930 152 1100 214 1230 206"/>
+          <path class="ruta-trail" id="ruta-trail" pathLength="1000" d="M-30 238C110 238 170 172 300 170S470 246 610 236 790 150 930 152 1100 214 1230 206"/>
+        </svg>
+        <div class="ruta-stop is-planta" data-at=".085"><span class="pin"></span><b>Planta Sn Roque</b></div>
+        <div class="ruta-stop" data-at=".3"><span class="pin"></span><b>Tienda</b></div>
+        <div class="ruta-stop" data-at=".52"><span class="pin"></span><b>Taquería</b></div>
+        <div class="ruta-stop" data-at=".73"><span class="pin"></span><b>Pizzería</b></div>
+        <div class="ruta-stop is-fin" data-at=".93"><span class="pin"></span><b>Tu negocio</b></div>
+        <img class="ruta-truck" id="ruta-truck" src="assets/img/truck.webp" alt="" width="240" height="120" loading="lazy" decoding="async">
+      </div>
+    </div>
+    <div class="negocio-foot">
+      <div class="negocio-cta">
+        <button class="btn btn-wa" type="button" data-alta="nuevo"><span class="wa-badge" aria-hidden="true"><svg><use href="#i-wa"/></svg></span>Soy nuevo cliente</button>
+        <button class="btn btn-wa" type="button" data-alta="cliente"><span class="wa-badge" aria-hidden="true"><svg><use href="#i-wa"/></svg></span>Ya soy cliente</button>
+      </div>
+      <p class="negocio-nota">Atendemos únicamente a negocios establecidos: tiendas, restaurantes, taquerías y otros comercios.</p>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO (los mismos de la landing de Famo) ============ -->
+  <section class="contacto" id="contacto">
+    <div class="contacto-inner">
+      <div class="contacto-main">
+        <div>
+          <h2 class="h2">¿Dudas? Escríbenos por WhatsApp</h2>
+          <p class="contacto-num"><span id="tel-txt">+52 1 477 231 2260</span><button class="copy" id="copy-tel" type="button">Copiar número</button></p>
+        </div>
+        <div class="contacto-btns">
+          <a class="btn btn-wa" id="ct-wa" href="https://wa.me/5214772312260?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20de%20Quesos%20Sn%20Roque" target="_blank" rel="noopener"><span class="wa-badge" aria-hidden="true"><svg><use href="#i-wa"/></svg></span>WhatsApp</a>
+          <a class="btn btn-verde" href="https://www.google.com/maps/search/?api=1&amp;query=Quesos%20Sn%20Roque%2C%20Cerrada%20Mu%C3%B1oz%20109%2C%20San%20Roque%20de%20Montes&amp;query_place_id=ChIJFyalmZ3pK4QRieggMr-EW4I" target="_blank" rel="noopener"><span class="wa-badge map-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 21.5s-7-6.4-7-12a7 7 0 0 1 14 0c0 5.6-7 12-7 12z"/><circle cx="12" cy="9.5" r="2.6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></span>Cómo llegar</a>
+        </div>
+      </div>
+      <div class="areas">
+        <a class="area" href="https://wa.me/5214761186150?text=Hola%2C%20me%20interesa%20trabajar%20en%20Famo%20Alimentos" target="_blank" rel="noopener"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 9.5A2.5 2.5 0 0 1 5.5 7h13A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5v-8ZM8.5 7V5.5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V7M3 12.5h18"/></svg></i><span><small>Bolsa de trabajo</small><b>Forma parte de nuestro equipo de trabajo</b><em>WhatsApp de Atracción del Talento · 476 118 6150</em></span></a>
+        <a class="area" href="mailto:compras@famoalimentos.com.mx?subject=Propuesta%20de%20proveedor"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5v-9A2.5 2.5 0 0 1 5.5 5ZM3.5 7l8.5 6 8.5-6"/></svg></i><span><small>Proveedores</small><b>¿Quieres ser nuestro proveedor?</b><em>compras@famoalimentos.com.mx</em></span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <span><b>Famo Alimentos S.A. de C.V.</b> · Quesos Sn Roque · Villa Magna · Don Fito · <a href="https://www.google.com/maps/search/?api=1&amp;query=Quesos%20Sn%20Roque%2C%20Cerrada%20Mu%C3%B1oz%20109%2C%20San%20Roque%20de%20Montes&amp;query_place_id=ChIJFyalmZ3pK4QRieggMr-EW4I" target="_blank" rel="noopener">San Roque de Montes, San Francisco del Rincón, Gto.</a></span>
+    <a class="foot-aviso" href="#aviso-de-privacidad" data-aviso>Aviso de privacidad</a>
+  </div>
+</footer>
+
+<!-- Panel de familia -->
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-bg" data-close></div>
+  <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <button class="drawer-x" type="button" data-close aria-label="Cerrar">×</button>
+    <div class="drawer-hero" id="drawer-hero"></div>
+    <div class="drawer-body" data-lenis-prevent>
+      <p class="script drawer-script" id="drawer-script"></p>
+      <h3 class="drawer-title" id="drawer-title"></h3>
+      <div class="drawer-chips" id="drawer-chips"></div>
+      <ul class="drawer-list" id="drawer-list"></ul>
+      <div class="drawer-cta"><a class="btn btn-wa" id="drawer-wa" href="https://wa.me/5214772312260?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20de%20Quesos%20Sn%20Roque" target="_blank" rel="noopener"><span class="wa-badge" aria-hidden="true"><svg><use href="#i-wa"/></svg></span>Pedir por WhatsApp</a></div>
+    </div>
+  </aside>
+</div>
+
+<!-- Datos para darte de alta o atenderte (mismas preguntas que la landing de Famo) -->
+<div class="alta" id="alta" aria-hidden="true">
+  <div class="alta-bg" data-alta-close></div>
+  <aside class="alta-panel" role="dialog" aria-modal="true" aria-labelledby="alta-t">
+    <header class="alta-head">
+      <div><span class="alta-k">Para tu negocio</span><h2 id="alta-t">Tus datos</h2><small>Con ellos un vendedor te atiende y surte tu negocio.</small></div>
+      <button class="alta-x" type="button" data-alta-close aria-label="Cerrar">×</button>
+    </header>
+    <div class="alta-body" data-lenis-prevent>
+      <div class="ctwrap"><div class="ctype" id="c-type" role="radiogroup" aria-label="Tipo de cliente"><button type="button" role="radio" data-t="nuevo">Soy nuevo cliente</button><button type="button" role="radio" data-t="cliente">Ya soy cliente</button></div><button type="button" class="qhelp" id="c-help" aria-haspopup="dialog" aria-label="¿Dónde encuentro mi número de cliente?" title="¿Dónde está mi número de cliente?">?</button></div>
+      <label id="c-idwrap" hidden><span class="req">Número de cliente</span><input id="c-id" type="text" inputmode="numeric" placeholder="Ej. 12345 · viene en tu ticket"></label>
+      <label><span class="req">Nombre del negocio (o tu nombre)</span><input id="c-name" type="text" placeholder="Ej. Abarrotes La Esquina" autocomplete="organization"></label>
+      <div class="g2"><label><span class="req">Encargado</span><input id="c-contact" type="text" placeholder="Nombre" autocomplete="name"></label><label><span class="req">Teléfono</span><input id="c-phone" type="tel" inputmode="tel" placeholder="10 dígitos" autocomplete="tel"></label></div>
+      <label><span class="req">Calle y número</span><input id="c-addr" type="text" placeholder="Ej. Hidalgo 123" autocomplete="street-address"></label>
+      <div class="g2"><label><span class="req">Colonia</span><input id="c-col" type="text" placeholder="Colonia"></label><label>Código postal<input id="c-cp" type="text" inputmode="numeric" maxlength="5" placeholder="36443" autocomplete="postal-code"></label></div>
+      <label><span class="req">Ciudad y estado</span><input id="c-city" type="text" placeholder="Ej. San Francisco del Rincón, Gto." autocomplete="address-level2"></label>
+      <label>Horario de atención<input id="c-hours" type="text" placeholder="Ej. Lun a sáb, 9 a 18 h"></label>
+      <label>¿Qué necesitas?<textarea id="c-note" placeholder="Pedido, quesos que te interesan, cambio de horario, queja o sugerencia…"></textarea></label>
+      <details class="privacy" id="privacy"><summary>Aviso de privacidad</summary><p>En Quesos Sn Roque (Famo Alimentos) la protección de tus datos es muy importante. La información que nos compartas (nombre, teléfono, ubicación y datos de tu establecimiento) se usa únicamente para brindarte atención personalizada y enviar a un vendedor que pueda surtir tu negocio. Tus datos están protegidos y no serán compartidos con terceros. Al enviarlos aceptas su uso con base en la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p><p><b>Atendemos únicamente a negocios establecidos</b> (tiendas, restaurantes, taquerías y otros comercios); no vendemos para consumo personal.</p><p><a class="av-link" href="#aviso-de-privacidad" data-aviso>Lee el aviso de privacidad completo</a> (qué datos usamos y cómo consultarlos, corregirlos o borrarlos).</p></details>
+    </div>
+    <footer class="alta-foot">
+      <p class="alta-err" id="alta-err" role="status" aria-live="polite"></p>
+      <div class="alta-row"><a class="btn btn-wa" id="c-send" href="https://wa.me/5214772312260?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20de%20Quesos%20Sn%20Roque" target="_blank" rel="noopener"><span class="wa-badge" aria-hidden="true"><svg><use href="#i-wa"/></svg></span>Enviar por WhatsApp</a><button class="btn btn-verde" id="c-copy" type="button">Copiar</button></div>
+    </footer>
+
+    <div class="idhelp" id="idhelp" role="dialog" aria-modal="true" aria-labelledby="idh-t" hidden>
+      <header class="alta-head"><div><span class="alta-k">Ya soy cliente</span><h2 id="idh-t">¿Dónde está tu número de cliente?</h2></div><button class="alta-x" type="button" id="idh-x" aria-label="Cerrar ayuda">×</button></header>
+      <div class="idh-stage">
+        <div class="tkw">
+          <div class="tk" role="img" aria-label="Ticket de ejemplo: arriba, en los datos del negocio, dice Clave: 12345">
+            <p class="c">Famo Alimentos S.A. de C.V.</p>
+            <p class="c">Calle: Cerrada Muñoz 109</p>
+            <p class="c">Col. San Roque de Montes</p>
+            <p class="c">Teléfono: (477) 343 4300</p>
+            <p class="hl">Clave: <b class="num">12345</b></p>
+            <p>Nombre corto: Tienda Lupita</p>
+            <p>Calle: Hidalgo 123</p>
+            <p class="c sep">Ticket de venta</p>
+            <p>Folio: SL-0010-00000</p>
+            <p class="row"><span>011</span>SR ASAD B TIRAS 3k</p>
+            <p class="row"><span>106</span>SR RANCHERO L 150g</p>
+            <p class="row"><span>208</span>SR CREMA NAT B 220g</p>
+          </div>
+          <div class="tk-call" aria-hidden="true">Tu número de cliente<small>junto a “Clave”</small></div>
+        </div>
+        <span class="idh-ej">Ticket de ejemplo</span>
+      </div>
+      <ol class="idh-steps">
+        <li><span><b>Toma un ticket</b> que te haya dejado tu vendedor de Sn Roque.</span></li>
+        <li><span><b>Arriba, en los datos de tu negocio,</b> busca la palabra “Clave”.</span></li>
+        <li><span><b>El número de a lado es tu número de cliente.</b> En el ejemplo: 12345.</span></li>
+      </ol>
+      <div class="idh-foot"><button type="button" class="btn btn-verde idh-ok" id="idh-ok">Entendido, escribir mi número</button><small>¿No lo encuentras? Pregúntale a tu vendedor.</small></div>
+    </div>
+  </aside>
+</div>
+
+<!-- Aviso de privacidad completo (mismo contenido base que la landing de Famo Alimentos) -->
+<div class="aviso" id="aviso" role="dialog" aria-modal="true" aria-labelledby="av-t" hidden>
+  <div class="av-box">
+    <header><div><span class="av-k">Quesos Sn Roque · Famo Alimentos</span><h2 id="av-t">Aviso de privacidad</h2><small>Última actualización: 4 de noviembre de 2026</small></div><button class="av-x" type="button" id="av-x" aria-label="Cerrar aviso de privacidad">×</button></header>
+    <div class="av-body" id="av-body" data-lenis-prevent>
+      <p>Este aviso explica qué datos personales recabamos en esta página y por WhatsApp, para qué los usamos y cómo puedes ejercer tus derechos, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+      <h3>1. Quién es responsable de tus datos</h3>
+      <p><b>Famo Alimentos S.A. de C.V.</b>, empresa de la marca Quesos Sn Roque (y de Villa Magna y Don Fito), con domicilio en Cerrada Muñoz 109, San Roque de Montes, San Francisco del Rincón, Guanajuato, C.P. 36443, México. Teléfono <a href="tel:+524773434300">(477) 343 43 00</a>.</p>
+      <h3>2. Qué datos recabamos</h3>
+      <ul>
+        <li><b>Nuevos clientes y clientes:</b> número de cliente (si ya eres cliente), nombre del negocio, nombre de la persona encargada, teléfono o WhatsApp, domicilio del negocio (calle, colonia, código postal, ciudad y estado), horario de atención y lo que nos pides en tu mensaje (pedido, cambio, queja o sugerencia).</li>
+        <li><b>Bolsa de trabajo:</b> los datos que nos envíes por WhatsApp, como nombre, teléfono, escolaridad y experiencia laboral (por ejemplo, en tu solicitud o currículum).</li>
+        <li><b>Proveedores:</b> nombre, puesto, teléfono y correo de la persona que nos escribe y datos de su empresa.</li>
+      </ul>
+      <p>No solicitamos datos personales sensibles (como estado de salud, religión u origen étnico). Te pedimos no incluirlos en tus mensajes ni en tu currículum.</p>
+      <h3>3. Para qué los usamos</h3>
+      <p>Usamos tus datos solo para atender lo que tú nos pides:</p>
+      <ul>
+        <li>Recibir tu solicitud para ser cliente o atender tu mensaje si ya lo eres.</li>
+        <li>Asignarte el vendedor y la ruta de tu zona, coordinar visitas y entregas y darte seguimiento.</li>
+        <li>Mantener tu registro como cliente y atender tus dudas, cambios o aclaraciones.</li>
+        <li>En la bolsa de trabajo, revisar tu perfil y contactarte durante el proceso de selección.</li>
+        <li>Con proveedores, atender y evaluar tu propuesta.</li>
+      </ul>
+      <p>No usamos tus datos para publicidad ni para otras finalidades. Si algún día quisiéramos hacerlo, primero te pediremos tu consentimiento.</p>
+      <h3>4. Con quién los compartimos</h3>
+      <p>No vendemos ni rentamos tus datos. Solo los usan las áreas de Famo Alimentos que los necesitan (ventas, distribución, atención a clientes, atracción del talento o compras). No los transferimos a otras empresas, salvo que la ley lo exija o una autoridad competente lo solicite.</p>
+      <p>Los mensajes se envían por WhatsApp o por correo electrónico, servicios de terceros que tú eliges usar y que tienen sus propios avisos de privacidad.</p>
+      <h3>5. Lo que guarda esta página</h3>
+      <p>Esta página no usa cookies de publicidad ni de rastreo, y no carga servicios de otras empresas. Para que no tengas que escribir todo otra vez, tu navegador guarda en tu propio dispositivo los datos del formulario; no nos llegan hasta que tú presionas «Enviar por WhatsApp». Puedes borrarlos desde tu navegador (borrar datos de navegación). El sitio está alojado en GitHub Pages, que puede registrar datos técnicos de la visita, como la dirección IP, por seguridad.</p>
+      <h3>6. Tus derechos y cómo ejercerlos</h3>
+      <p>En cualquier momento puedes pedir <b>acceder</b> a tus datos, <b>corregirlos</b>, <b>cancelarlos</b> u <b>oponerte</b> a su uso (derechos ARCO), así como <b>revocar tu consentimiento</b> o <b>limitar</b> su uso, por ejemplo, para que ya no te contactemos.</p>
+      <p>Para hacerlo, llámanos al <a href="tel:+524773434300">(477) 343 43 00</a> o entrega tu solicitud en nuestro domicilio, con:</p>
+      <ul>
+        <li>Tu nombre y un teléfono o correo para responderte.</li>
+        <li>Una identificación oficial (o la de tu representante, con el documento que lo acredite).</li>
+        <li>Qué datos y qué derecho quieres ejercer, explicado con claridad.</li>
+      </ul>
+      <p>Te responderemos en un máximo de 20 días hábiles y, si procede, lo aplicaremos dentro de los 15 días hábiles siguientes.</p>
+      <h3>7. Cambios a este aviso</h3>
+      <p>Si este aviso cambia, publicaremos la versión nueva en esta misma página con su fecha de actualización.</p>
+      <h3>8. Autoridad</h3>
+      <p>Si consideras que no atendimos tu solicitud o que tus datos se usaron indebidamente, puedes acudir a la Secretaría Anticorrupción y Buen Gobierno, autoridad en materia de protección de datos personales.</p>
+    </div>
+    <div class="av-foot2"><button type="button" class="av-ok" id="av-ok">Entendido</button></div>
+  </div>
+</div>
