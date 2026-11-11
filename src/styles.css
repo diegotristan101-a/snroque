@@ -531,9 +531,9 @@ html.av-open{overflow:hidden}
 /* ---------- rueda fija (imagen) mientras se descarga la escena 3D; se desvanece cuando el 3D ya pinta ---------- */
 .hero-inner{position:relative;z-index:1}
 .hero-poster{position:absolute;inset:0;z-index:0;pointer-events:none;transition:opacity .6s}
-.hero-poster img{position:absolute;max-width:none;height:auto;left:calc(50% - 37.650svh);top:calc(50svh + 9.071svh);width:78.689svh}
-@media (min-width:860px){.hero-poster img{left:calc(50% - 22.852svh);top:calc(50svh - 21.549svh);width:100.911svh}}
-@media (min-width:1200px){.hero-poster img{left:calc(50% - 19.500svh);top:calc(50svh - 22.111svh);width:118.889svh}}
+.hero-poster img{position:absolute;max-width:none;height:auto;left:calc(50% - 29.399svh);top:calc(50svh + 5.027svh);width:69.727svh}
+@media (min-width:860px){.hero-poster img{left:calc(50% - 7.617svh);top:calc(50svh - 23.438svh);width:85.677svh}}
+@media (min-width:1200px){.hero-poster img{left:calc(50% - 3.944svh);top:calc(50svh - 23.833svh);width:104.222svh}}
 html.gl-ready .hero-poster{opacity:0}
 html.no-gl .hero-poster,html.reduce .hero-poster{display:none}
 

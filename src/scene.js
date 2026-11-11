@@ -77,18 +77,17 @@ export function createScene(canvas, opts={}){
   const fill=new THREE.DirectionalLight(0xd8ffe6,.6); fill.position.set(-4,2,2); scene.add(fill);
   scene.add(new THREE.HemisphereLight(0xffffff,0x00843d,.5));
 
-  // materiales: queso Ranchero (fresco, blanco marfil). Por fuera liso y húmedo; por dentro, grano desmoronable.
-  const rindTex=noiseTexture(512,'#F7EDCB',9,0,'0,0,0',0,[1,.96,.8]); rindTex.repeat.set(.6,.6);
-  const rindBump=noiseTexture(256,'#808080',46,0,'0,0,0',0,[1,1,1]); rindBump.repeat.set(1.4,1.4);
-  const inTex=noiseTexture(512,'#FBF4DA',20,900,'196,174,112',.5,[1,.95,.78]); inTex.repeat.set(.9,.9);
-  const inBump=noiseTexture(512,'#8c8c8c',150,900,'0,0,0',.8,[1,1,1]); inBump.repeat.set(.9,.9);
-  const rind=new THREE.MeshPhysicalMaterial({color:0xFFF8E2,map:rindTex,bumpMap:rindBump,bumpScale:.006,roughness:.58,clearcoat:.1,clearcoatRoughness:.55,sheen:.5,sheenColor:0xffffff,sheenRoughness:.6});
-  const inside=new THREE.MeshPhysicalMaterial({color:0xFFFBEA,map:inTex,bumpMap:inBump,bumpScale:.05,roughness:.95,sheen:.25,sheenColor:0xffffff,sheenRoughness:.9,side:THREE.DoubleSide});
-  const crumbMat=new THREE.MeshPhysicalMaterial({color:0xFBF2D8,bumpMap:inBump,bumpScale:.02,roughness:.85});
+  // materiales: queso Ranchero con las texturas de las fotos reales (tapa, costado con las marcas de la manta y corte)
+  const texLoader=new THREE.TextureLoader();
+  const foto=(n,rx=1,ry=1)=>{ const t=texLoader.load((opts.base||'assets/img/')+n); t.colorSpace=THREE.SRGBColorSpace; t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(rx,ry); t.anisotropy=8; return t; };
+  const relieve=(n,rx=1,ry=1)=>{ const t=texLoader.load((opts.base||'assets/img/')+n); t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(rx,ry); return t; };
+  const inBump=noiseTexture(256,'#8c8c8c',150,300,'0,0,0',.8,[1,1,1]);
+  const capMat=new THREE.MeshPhysicalMaterial({color:0xFFF4D8,map:foto('ranchero-tapa.webp'),bumpMap:relieve('ranchero-tapa.webp'),bumpScale:.035,roughness:.62,sheen:.4,sheenColor:0xffffff,sheenRoughness:.6});
+  const sideMat=new THREE.MeshPhysicalMaterial({color:0xFFF4D8,map:foto('ranchero-lado.webp'),bumpMap:relieve('ranchero-lado.webp'),bumpScale:.05,roughness:.55,clearcoat:.08,clearcoatRoughness:.6,sheen:.4,sheenColor:0xffffff,sheenRoughness:.6});
+  const inside=new THREE.MeshPhysicalMaterial({color:0xFFF6DE,map:foto('ranchero-corte.webp',1.5,1.5),bumpMap:relieve('ranchero-corte.webp',1.5,1.5),bumpScale:.07,roughness:.92,side:THREE.DoubleSide});
+  const crumbMat=new THREE.MeshPhysicalMaterial({color:0xF4EEDA,bumpMap:inBump,bumpScale:.02,roughness:.85});
   const shadowMat=new THREE.MeshBasicMaterial({map:shadowTexture(),transparent:true,depthWrite:false,opacity:1});
 
-  const texLoader=new THREE.TextureLoader();
-  const logoTex=texLoader.load(opts.logoUrl||'assets/img/logo-srq-512.webp'); logoTex.colorSpace=THREE.SRGBColorSpace;
 
   function shadow(scale=2.6){
     const m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),shadowMat.clone()); m.rotation.x=-Math.PI/2; m.scale.setScalar(scale); m.renderOrder=-1; return m;
@@ -97,24 +96,27 @@ export function createScene(canvas, opts={}){
   // ---------- QUESO RANCHERO (inicio) ----------
   // Rueda baja de orilla redondeada. Se arma por revolución (LatheGeometry) en dos piezas: el cuerpo y la rebanada.
   // Las caras del corte llevan otro material para que al partirlo se vea el queso por dentro.
-  const R=1.34, H=.72, BV=.075, P0=-2.42, P1=-1.38; // radio, alto, redondeo y ángulos de la rebanada
+  const R=1.3, H=.98, BV=.045, P0=-2.42, P1=-1.38, REP=3; // radio, alto, redondeo, ángulos de la rebanada y repeticiones del costado
   const perfil=[]; // (radio, altura) de abajo hacia arriba
   perfil.push(new THREE.Vector2(0,-H/2));
-  for(let i=0;i<=10;i++){ const a=-Math.PI/2+i/10*Math.PI/2; perfil.push(new THREE.Vector2(R-BV+Math.cos(a)*BV,-H/2+BV+Math.sin(a)*BV)); }
-  for(let i=1;i<6;i++){ const y=-H/2+BV+(H-2*BV)*i/6; perfil.push(new THREE.Vector2(R+Math.sin(i/6*Math.PI)*.022,y)); } // panza ligera
-  for(let i=0;i<=10;i++){ const a=i/10*Math.PI/2; perfil.push(new THREE.Vector2(R-BV+Math.cos(a)*BV,H/2-BV+Math.sin(a)*BV)); }
+  for(let i=0;i<=6;i++){ const a=-Math.PI/2+i/6*Math.PI/2; perfil.push(new THREE.Vector2(R-BV+Math.cos(a)*BV,-H/2+BV+Math.sin(a)*BV)); }
+  for(let i=1;i<8;i++){ const y=-H/2+BV+(H-2*BV)*i/8; perfil.push(new THREE.Vector2(R+Math.sin(i/8*Math.PI)*.018-(i/8)*.03,y)); } // panza ligera, un poco más angosto arriba
+  for(let i=0;i<=6;i++){ const a=i/6*Math.PI/2; perfil.push(new THREE.Vector2(R-.03-BV+Math.cos(a)*BV,H/2-BV+Math.sin(a)*BV)); }
   perfil.push(new THREE.Vector2(0,H/2));
+  const PACK=3.9, PACK_DX=.0, PACK_DZ=.0; // tamaño y centrado de la foto del empaque sobre el queso
+  const N=perfil.length, iA=4, iB=N-5; // cortes del perfil: base | costado | tapa
   const corte=new THREE.Shape(perfil.map(v=>v.clone()));
+  { const sg=new THREE.ShapeGeometry(corte); const u=sg.attributes.uv; for(let i=0;i<u.count;i++) u.setXY(i,u.getX(i)/R,u.getY(i)/R); corte.geo=sg; }
   function pieza(a0,a1){
     const g=new THREE.Group();
     const seg=Math.max(12,Math.round((a1-a0)/(Math.PI*2)*150));
-    const lg=new THREE.LatheGeometry(perfil,seg,a0,a1-a0);
-    // textura sin estirar: tapas en plano, costado desenrollado
-    const pos=lg.attributes.position, uv=lg.attributes.uv;
-    for(let i=0;i<pos.count;i++){ const x=pos.getX(i),y=pos.getY(i),z=pos.getZ(i);
-      if(Math.abs(y)>H/2-BV*.5) uv.setXY(i,x*.5,z*.5); else uv.setXY(i,Math.atan2(x,z)*R*.5,y*.5+.37); }
-    g.add(new THREE.Mesh(lg,rind));
-    for(const a of [a0,a1]){ const m=new THREE.Mesh(new THREE.ShapeGeometry(corte),inside); m.rotation.y=a-Math.PI/2; g.add(m); }
+    const parte=(pts,mat,tipo)=>{ const lg=new THREE.LatheGeometry(pts,seg,a0,a1-a0); const pos=lg.attributes.position, uv=lg.attributes.uv;
+      for(let i=0;i<pos.count;i++){ const x=pos.getX(i),y=pos.getY(i),z=pos.getZ(i);
+        if(tipo==='lado'){ const phi=a0+uv.getX(i)*(a1-a0); uv.setXY(i,phi/(Math.PI*2)*REP,(y+H/2)/H); }
+        else uv.setXY(i,x/(2*R)*.97+.5,.5-z/(2*R)*.97); }
+      g.add(new THREE.Mesh(lg,mat)); };
+    parte(perfil.slice(0,iA+1),capMat,'tapa'); parte(perfil.slice(iA,iB+1),sideMat,'lado'); parte(perfil.slice(iB),capMat,'tapa');
+    for(const a of [a0,a1]){ const m=new THREE.Mesh(corte.geo,inside); m.rotation.y=a-Math.PI/2; g.add(m); }
     return g;
   }
   const hero=new THREE.Group(); scene.add(hero);
@@ -122,10 +124,12 @@ export function createScene(canvas, opts={}){
   const body=pieza(P1,P0+Math.PI*2); wheel.add(body);
   const wedge=pieza(P0,P1); wheel.add(wedge);
   const am=(P0+P1)/2, wedgeDir=new THREE.Vector3(Math.sin(am),0,Math.cos(am));
-  // marca "estampada" en la tapa, del lado contrario a la rebanada
-  const decal=new THREE.Mesh(new THREE.PlaneGeometry(.92,.92*900/840),new THREE.MeshStandardMaterial({map:logoTex,transparent:true,opacity:.2,color:0x8f8a6c,roughness:.9,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2}));
-  decal.rotation.x=-Math.PI/2; decal.rotation.z=-am+Math.PI*.5+1.1; decal.position.set(-Math.sin(am)*.42,H/2+.004,-Math.cos(am)*.42); wheel.add(decal);
-  const wheelShadow=shadow(3.4); wheelShadow.position.y=-H/2-.35; hero.add(wheelShadow);
+  // empaque: la tapa impresa del Ranchero 300 g (foto del catálogo) cubre el queso al inicio y se levanta al deslizar
+  const tapaG=new THREE.Group(); hero.add(tapaG);
+  const packMat=new THREE.MeshBasicMaterial({transparent:true,alphaTest:.02,side:THREE.DoubleSide,depthWrite:false,toneMapped:false,color:0xf2f2f2});
+  const pack=new THREE.Mesh(new THREE.PlaneGeometry(1,1),packMat); pack.rotation.x=-Math.PI/2; pack.visible=false; pack.renderOrder=2; tapaG.add(pack);
+  texLoader.load(opts.packUrl||'assets/prod/102.webp',t=>{ t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=8; packMat.map=t; packMat.needsUpdate=true; pack.visible=true; });
+  const wheelShadow=shadow(3.4); wheelShadow.position.y=-H/2-.3; hero.add(wheelShadow);
   // moronas flotando (el Ranchero se desmorona)
   const cubes=[];
   for(let i=0;i<9;i++){
@@ -153,11 +157,16 @@ export function createScene(canvas, opts={}){
     hero.visible = S.section==='hero';
     if(!hero.visible) return;
     hero.position.set(L.x,L.y,0); hero.scale.setScalar(L.sc);
+    // el empaque se levanta y se va antes de partir el queso
+    const q=easeIO(clamp((p-.02)/.15));
+    tapaG.rotation.x=.5+S.mys*.06; tapaG.rotation.z=S.mxs*.05;
+    pack.scale.setScalar(PACK); pack.position.set(PACK_DX,H/2+.035+1.7*q,PACK_DZ-1.5*q); pack.rotation.x=-Math.PI/2-.9*q; pack.rotation.z=.25*q;
+    packMat.opacity=1-smooth(.35,.85,q); pack.visible=!!packMat.map && q<.995;
     // la rueda se mece y gira con el scroll hasta dejar el corte de frente
     wheel.rotation.x=.5+S.mys*.06+.1*easeIO(clamp((p-.2)/.4)); wheel.rotation.z=S.mxs*.05;
     wheel.rotation.y=Math.sin(t*.35)*.14+p*1.6+.5;
     // rebanada: sale, sube y se voltea para enseñar el corte
-    const p1=easeIO(clamp((p-.18)/.36));
+    const p1=easeIO(clamp((p-.2)/.34));
     const p2=easeOut(clamp((p-.36)/.34));
     const giro=-1.25*p2; // la rebanada se abre como puerta desde la punta y deja ver sus caras y el hueco
     wedge.position.set(Math.sin(am+giro*.6),0,Math.cos(am+giro*.6)).multiplyScalar(L.wd*p1); wedge.position.y=.3*p1+Math.sin(t*1.4)*.03*p1;

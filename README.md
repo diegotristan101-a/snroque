@@ -3,7 +3,7 @@
 Página de **Quesos Sn Roque** (marca de Famo Alimentos S.A. de C.V.).
 
 **Contenido de la página:**
-- Un queso Ranchero 3D que se parte con el scroll y deja ver el queso por dentro.
+- Un queso Ranchero 3D con su empaque: al deslizar se destapa, se parte y deja ver el queso por dentro (texturas tomadas de fotos reales del queso).
 - Las 10 familias de producto con sus 42 presentaciones (en celular el carril se desliza con el dedo).
 - Recetas en video.
 - Ruta de reparto para negocios.
@@ -16,14 +16,14 @@ Página de **Quesos Sn Roque** (marca de Famo Alimentos S.A. de C.V.).
 
 ## Calificación de Google (Lighthouse)
 
-Medido el 4 de noviembre de 2026 con Lighthouse 12.8, en local con compresión gzip igual que GitHub Pages. Los reportes completos están en [`lighthouse-reports/`](lighthouse-reports/) (abrir los `.html` en el navegador).
+Medido el 11 de noviembre de 2026 con Lighthouse 12.8, en local con compresión gzip igual que GitHub Pages. Los reportes completos están en [`lighthouse-reports/`](lighthouse-reports/) (abrir los `.html` en el navegador).
 
 | Prueba | Rendimiento | Accesibilidad | Prácticas recomendadas | SEO |
 |---|:-:|:-:|:-:|:-:|
-| Celular (4G lenta simulada) | **99** | **100** | **100** | **100** |
+| Celular (4G lenta simulada) | **97** | **100** | **100** | **100** |
 | Computadora | **100** | **100** | **100** | **100** |
 
-Métricas en celular: primera pintura 1.0 s, elemento más grande 2.1 s, bloqueo 10 ms, movimiento de la página 0.
+Métricas en celular: primera pintura 1.0 s, elemento más grande 2.5 s, bloqueo 50 ms, movimiento de la página 0.
 
 Para volver a medir cuando ya esté en línea, usa https://pagespeed.web.dev con la dirección del sitio, o `URL=https://… npm run lighthouse`.
 
