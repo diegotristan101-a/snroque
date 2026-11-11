@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
 // ====================== utilidades ======================
 const clamp = (v,a=0,b=1)=>Math.max(a,Math.min(b,v));
@@ -13,7 +12,7 @@ const easeIO =(t)=>{t=clamp(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;};
 // ruido determinista sencillo
 let seed=7; const rnd=()=>{ seed=(seed*16807)%2147483647; return (seed-1)/2147483646; };
 
-function noiseTexture(size, base, amp, holes){
+function noiseTexture(size, base, amp, holes, holeRGB='120,90,20', holeA=.35, tint=[1,.9,.6]){
   const c=document.createElement('canvas'); c.width=c.height=size;
   const ctx=c.getContext('2d');
   ctx.fillStyle=base; ctx.fillRect(0,0,size,size);
@@ -30,7 +29,7 @@ function noiseTexture(size, base, amp, holes){
       const fine=(rnd()-.5)*.35;
       const k=(v+fine)*amp;
       const i=(y*size+x)*4;
-      d[i]=clamp(d[i]+k,0,255); d[i+1]=clamp(d[i+1]+k*.9,0,255); d[i+2]=clamp(d[i+2]+k*.6,0,255);
+      d[i]=clamp(d[i]+k*tint[0],0,255); d[i+1]=clamp(d[i+1]+k*tint[1],0,255); d[i+2]=clamp(d[i+2]+k*tint[2],0,255);
     }
   }
   ctx.putImageData(img,0,0);
@@ -38,7 +37,7 @@ function noiseTexture(size, base, amp, holes){
     for(let i=0;i<holes;i++){
       const r=1+rnd()*2.2, x=rnd()*size, y=rnd()*size;
       const g=ctx.createRadialGradient(x,y,0,x,y,r*2.2);
-      g.addColorStop(0,'rgba(120,90,20,.35)'); g.addColorStop(1,'rgba(120,90,20,0)');
+      g.addColorStop(0,`rgba(${holeRGB},${holeA})`); g.addColorStop(1,`rgba(${holeRGB},0)`);
       ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r*2.2,0,Math.PI*2); ctx.fill();
     }
   }
@@ -78,12 +77,14 @@ export function createScene(canvas, opts={}){
   const fill=new THREE.DirectionalLight(0xd8ffe6,.6); fill.position.set(-4,2,2); scene.add(fill);
   scene.add(new THREE.HemisphereLight(0xffffff,0x00843d,.5));
 
-  // materiales
-  const pasteTex=noiseTexture(512,'#F3D98D',18,34); pasteTex.repeat.set(.45,.45);
-  const bumpTex=noiseTexture(256,'#808080',70,0);   bumpTex.repeat.set(.6,.6);
-  const cheeseCap=new THREE.MeshPhysicalMaterial({color:0xF6DE93,map:pasteTex,bumpMap:bumpTex,bumpScale:.012,roughness:.5,clearcoat:.14,clearcoatRoughness:.5,sheen:.4,sheenColor:0xfff4cf,sheenRoughness:.7});
-  const cheeseWall=new THREE.MeshPhysicalMaterial({color:0xEFCF78,bumpMap:bumpTex,bumpScale:.01,roughness:.52,clearcoat:.14,clearcoatRoughness:.5,sheen:.4,sheenColor:0xfff4cf,sheenRoughness:.7});
-  const cheesePlain=new THREE.MeshPhysicalMaterial({color:0xF4DD95,bumpMap:bumpTex,bumpScale:.012,roughness:.55,clearcoat:.1,clearcoatRoughness:.6,sheen:.5,sheenColor:0xfff4cf});
+  // materiales: queso Ranchero (fresco, blanco marfil). Por fuera liso y húmedo; por dentro, grano desmoronable.
+  const rindTex=noiseTexture(512,'#F7EDCB',9,0,'0,0,0',0,[1,.96,.8]); rindTex.repeat.set(.6,.6);
+  const rindBump=noiseTexture(256,'#808080',46,0,'0,0,0',0,[1,1,1]); rindBump.repeat.set(1.4,1.4);
+  const inTex=noiseTexture(512,'#FBF4DA',20,900,'196,174,112',.5,[1,.95,.78]); inTex.repeat.set(.9,.9);
+  const inBump=noiseTexture(512,'#8c8c8c',150,900,'0,0,0',.8,[1,1,1]); inBump.repeat.set(.9,.9);
+  const rind=new THREE.MeshPhysicalMaterial({color:0xFFF8E2,map:rindTex,bumpMap:rindBump,bumpScale:.006,roughness:.58,clearcoat:.1,clearcoatRoughness:.55,sheen:.5,sheenColor:0xffffff,sheenRoughness:.6});
+  const inside=new THREE.MeshPhysicalMaterial({color:0xFFFBEA,map:inTex,bumpMap:inBump,bumpScale:.05,roughness:.95,sheen:.25,sheenColor:0xffffff,sheenRoughness:.9,side:THREE.DoubleSide});
+  const crumbMat=new THREE.MeshPhysicalMaterial({color:0xFBF2D8,bumpMap:inBump,bumpScale:.02,roughness:.85});
   const shadowMat=new THREE.MeshBasicMaterial({map:shadowTexture(),transparent:true,depthWrite:false,opacity:1});
 
   const texLoader=new THREE.TextureLoader();
@@ -93,37 +94,55 @@ export function createScene(canvas, opts={}){
     const m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),shadowMat.clone()); m.rotation.x=-Math.PI/2; m.scale.setScalar(scale); m.renderOrder=-1; return m;
   }
 
-  // ---------- RUEDA (inicio) ----------
-  const R=1.32, H=.6, A0=-.14, A1=.80, BT=.085;
-  function sector(r,a0,a1){ const s=new THREE.Shape(); s.moveTo(0,0); s.lineTo(r*Math.cos(a0),r*Math.sin(a0)); s.absarc(0,0,r,a0,a1,false); s.lineTo(0,0); return s; }
-  const ext={depth:H,bevelEnabled:true,bevelThickness:BT,bevelSize:BT,bevelOffset:0,bevelSegments:7,curveSegments:160};
-  function cheesePiece(shape){
-    const g=new THREE.ExtrudeGeometry(shape,ext); g.rotateX(-Math.PI/2); g.translate(0,-H/2,0); g.computeVertexNormals();
-    return new THREE.Mesh(g,[cheeseCap,cheeseWall]);
+  // ---------- QUESO RANCHERO (inicio) ----------
+  // Rueda baja de orilla redondeada. Se arma por revolución (LatheGeometry) en dos piezas: el cuerpo y la rebanada.
+  // Las caras del corte llevan otro material para que al partirlo se vea el queso por dentro.
+  const R=1.34, H=.72, BV=.075, P0=-2.42, P1=-1.38; // radio, alto, redondeo y ángulos de la rebanada
+  const perfil=[]; // (radio, altura) de abajo hacia arriba
+  perfil.push(new THREE.Vector2(0,-H/2));
+  for(let i=0;i<=10;i++){ const a=-Math.PI/2+i/10*Math.PI/2; perfil.push(new THREE.Vector2(R-BV+Math.cos(a)*BV,-H/2+BV+Math.sin(a)*BV)); }
+  for(let i=1;i<6;i++){ const y=-H/2+BV+(H-2*BV)*i/6; perfil.push(new THREE.Vector2(R+Math.sin(i/6*Math.PI)*.022,y)); } // panza ligera
+  for(let i=0;i<=10;i++){ const a=i/10*Math.PI/2; perfil.push(new THREE.Vector2(R-BV+Math.cos(a)*BV,H/2-BV+Math.sin(a)*BV)); }
+  perfil.push(new THREE.Vector2(0,H/2));
+  const corte=new THREE.Shape(perfil.map(v=>v.clone()));
+  function pieza(a0,a1){
+    const g=new THREE.Group();
+    const seg=Math.max(12,Math.round((a1-a0)/(Math.PI*2)*150));
+    const lg=new THREE.LatheGeometry(perfil,seg,a0,a1-a0);
+    // textura sin estirar: tapas en plano, costado desenrollado
+    const pos=lg.attributes.position, uv=lg.attributes.uv;
+    for(let i=0;i<pos.count;i++){ const x=pos.getX(i),y=pos.getY(i),z=pos.getZ(i);
+      if(Math.abs(y)>H/2-BV*.5) uv.setXY(i,x*.5,z*.5); else uv.setXY(i,Math.atan2(x,z)*R*.5,y*.5+.37); }
+    g.add(new THREE.Mesh(lg,rind));
+    for(const a of [a0,a1]){ const m=new THREE.Mesh(new THREE.ShapeGeometry(corte),inside); m.rotation.y=a-Math.PI/2; g.add(m); }
+    return g;
   }
   const hero=new THREE.Group(); scene.add(hero);
   const wheel=new THREE.Group(); hero.add(wheel);
-  const body=cheesePiece(sector(R,A1,A0+Math.PI*2)); wheel.add(body);
-  const wedge=cheesePiece(sector(R,A0,A1)); wheel.add(wedge);
-  const am=(A0+A1)/2, wedgeDir=new THREE.Vector3(Math.cos(am),0,-Math.sin(am));
-  // marca "estampada" en la tapa
-  const decal=new THREE.Mesh(new THREE.PlaneGeometry(1.0,1.0*900/840),new THREE.MeshStandardMaterial({map:logoTex,transparent:true,opacity:.42,color:0x8a6d2a,roughness:.9,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2}));
-  decal.rotation.x=-Math.PI/2; decal.rotation.z=-Math.PI/2-am; decal.position.set(-.18,H/2+BT+.004,.10); wheel.add(decal);
-  const wheelShadow=shadow(3.4); wheelShadow.position.y=-H/2-BT-.35; hero.add(wheelShadow);
-  // cubitos flotantes
-  const cubes=[]; const cubeGeo=new RoundedBoxGeometry(.3,.3,.3,3,.07);
-  for(let i=0;i<8;i++){
-    const m=new THREE.Mesh(cubeGeo,cheesePlain); const a=rnd()*Math.PI*2, r=2.1+rnd()*.9;
-    m.userData={a,r,y:(rnd()-.5)*1.8,s:.6+rnd()*.7,rot:new THREE.Vector3(rnd(),rnd(),rnd()),sp:.15+rnd()*.25};
+  const body=pieza(P1,P0+Math.PI*2); wheel.add(body);
+  const wedge=pieza(P0,P1); wheel.add(wedge);
+  const am=(P0+P1)/2, wedgeDir=new THREE.Vector3(Math.sin(am),0,Math.cos(am));
+  // marca "estampada" en la tapa, del lado contrario a la rebanada
+  const decal=new THREE.Mesh(new THREE.PlaneGeometry(.92,.92*900/840),new THREE.MeshStandardMaterial({map:logoTex,transparent:true,opacity:.2,color:0x8f8a6c,roughness:.9,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2}));
+  decal.rotation.x=-Math.PI/2; decal.rotation.z=-am+Math.PI*.5+1.1; decal.position.set(-Math.sin(am)*.42,H/2+.004,-Math.cos(am)*.42); wheel.add(decal);
+  const wheelShadow=shadow(3.4); wheelShadow.position.y=-H/2-.35; hero.add(wheelShadow);
+  // moronas flotando (el Ranchero se desmorona)
+  const cubes=[];
+  for(let i=0;i<9;i++){
+    const cg=new THREE.IcosahedronGeometry(.15,3); const cp=cg.attributes.position; const sx=.8+rnd()*.5, sy=.6+rnd()*.4, sz=.8+rnd()*.5;
+    for(let k=0;k<cp.count;k++){ const x=cp.getX(k),y=cp.getY(k),z=cp.getZ(k); const j=1+Math.sin(x*14+i)*Math.cos(y*12+i*2)*.16+Math.sin(z*33+x*21+i)*.07; cp.setXYZ(k,x*sx*j,y*sy*j,z*sz*j); }
+    cg.computeVertexNormals();
+    const m=new THREE.Mesh(cg,crumbMat); const a=rnd()*Math.PI*2, r=2.25+rnd()*.9;
+    m.userData={a,r,y:(rnd()-.5)*1.8,s:.35+rnd()*.5,rot:new THREE.Vector3(rnd(),rnd(),rnd()),sp:.15+rnd()*.25};
     m.scale.setScalar(m.userData.s); hero.add(m); cubes.push(m);
   }
 
   // ---------- estado ----------
   const S={section:'hero',hero:0,heroS:0,proc:0,procS:0,mx:0,my:0,mxs:0,mys:0,t:0};
-  const L={x:1.75,y:0,sc:1,psc:1,dropY:2.35,dolly:1.1}; // layout del objeto principal
+  const L={x:1.75,y:0,sc:1,psc:1,dropY:2.35,dolly:1.1,wd:.9,wx:0}; // layout del objeto principal
   function layout(){
     const w=window.innerWidth,h=window.innerHeight; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h,false);
-    if(isMobile()){ L.x=0; L.y=-1.0; L.sc=.6; L.psc=.5; L.dropY=1.2; L.dolly=.45; }
+    if(isMobile()){ L.x=0; L.y=-1.0; L.sc=.6; L.psc=.5; L.dropY=1.2; L.dolly=.45; L.wd=.62; L.wx=.42; } else { L.wd=.9; L.wx=0; }
     if(isMobile()){ } else if(w<1200){ L.x=1.45; L.y=-.05; L.sc=.9; L.psc=.9; L.dropY=1.75; L.dolly=1.0; } else { L.x=1.65; L.y=-.05; L.sc=.92; L.psc=.95; L.dropY=1.75; L.dolly=1.1; }
   }
   layout(); window.addEventListener('resize',layout);
@@ -134,22 +153,22 @@ export function createScene(canvas, opts={}){
     hero.visible = S.section==='hero';
     if(!hero.visible) return;
     hero.position.set(L.x,L.y,0); hero.scale.setScalar(L.sc);
-    // la rueda gira con el tiempo y con el scroll
-    wheel.rotation.x=.46+S.mys*.06; wheel.rotation.z=S.mxs*.05;
-    wheel.rotation.y=t*.06+p*1.6+.5;
-    // cuña: sale, sube y se inclina
+    // la rueda se mece y gira con el scroll hasta dejar el corte de frente
+    wheel.rotation.x=.5+S.mys*.06+.1*easeIO(clamp((p-.2)/.4)); wheel.rotation.z=S.mxs*.05;
+    wheel.rotation.y=Math.sin(t*.35)*.14+p*1.6+.5;
+    // rebanada: sale, sube y se voltea para enseñar el corte
     const p1=easeIO(clamp((p-.18)/.36));
-    const p2=easeOut(clamp((p-.42)/.3));
-    wedge.position.copy(wedgeDir).multiplyScalar(1.15*p1); wedge.position.y=.55*p1+Math.sin(t*1.4)*.03*p1;
-    wedge.rotation.set(0,0,0);
-    wedge.rotateOnWorldAxis(wedgeDir.clone().cross(new THREE.Vector3(0,1,0)).normalize(), -.55*p2);
+    const p2=easeOut(clamp((p-.36)/.34));
+    const giro=-1.25*p2; // la rebanada se abre como puerta desde la punta y deja ver sus caras y el hueco
+    wedge.position.set(Math.sin(am+giro*.6),0,Math.cos(am+giro*.6)).multiplyScalar(L.wd*p1); wedge.position.y=.3*p1+Math.sin(t*1.4)*.03*p1;
+    wedge.rotation.set(-.16*p2,giro,0);
     // acercamiento
     const dolly=easeIO(clamp((p-.5)/.3));
     camera.position.z=7.2-L.dolly*dolly; camera.position.y=.25-.12*dolly;
     camera.position.x=S.mxs*.18; camera.lookAt(S.mxs*.18*.4, -.1*dolly, 0);
     // salida
     const out=easeIn(clamp((p-.82)/.16));
-    hero.position.x=L.x-8.5*out; hero.position.y=L.y+1.2*out; wheel.rotation.z+=out*1.2;
+    hero.position.x=L.x+L.wx*p1-8.5*out; hero.position.y=L.y+1.2*out; wheel.rotation.z+=out*1.2;
     wheelShadow.material.opacity=1-p1*.35; wheelShadow.scale.setScalar(3.4*(1+.1*p1));
     // cubitos
     cubes.forEach((m,i)=>{ const u=m.userData; const a=u.a+t*u.sp; const spread=1+out*4;

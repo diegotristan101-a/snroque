@@ -1,6 +1,6 @@
 /* Layout: página de marca. Un solo verde, el de Quesos Sn Roque (Pantone 348 C, #00843D, el del sello
    100% LECHE y los empaques), en bloques sólidos que alternan con blanco. Barra verde fija, botones planos
-   con texto blanco, cuadros del empaque como única textura. Los colores siguen el modo claro u oscuro. */
+   con texto blanco y el verde degradado del empaque como fondo. Los colores siguen el modo claro u oscuro. */
 :root{
   --verde:#00843D; --verde-2:#006F33; --verde-3:#005A2A; --verde-4:#003F1D; --verde-tint:#E5F2EA;
   --verde-vivo:var(--verde); --verde-hondo:var(--verde-3); --verde-noche:var(--verde-4); --whats:var(--verde);
@@ -9,7 +9,7 @@
   --acc:var(--verde); --acc-2:var(--verde-2); --chip:var(--verde-tint);
   --sec:var(--verde); --shadow:rgba(10,40,22,.28);
   --road:#E2EEE6; --stem:#C7D7CC;
-  --cuadros:repeating-linear-gradient(90deg,rgba(255,255,255,.055) 0 32px,transparent 32px 64px),repeating-linear-gradient(0deg,rgba(255,255,255,.055) 0 32px,transparent 32px 64px);
+  --cuadros:radial-gradient(70% 90% at 50% 45%,rgba(60,200,120,.3) 0%,rgba(60,200,120,.12) 45%,rgba(0,0,0,.08) 100%);
   --tinta:var(--ink); --tinta-2:var(--ink-2); --crema:var(--bg);
   --display:"Latina Essential","Nunito",system-ui,sans-serif;
   --script:"Fineday","Brush Script MT","Segoe Script",cursive;
@@ -96,7 +96,9 @@ h3{font-family:var(--display);font-weight:900;line-height:1.1;margin:0}
 @media (max-width:380px){.nav-brand small{display:none}.nav-icons .soc{width:33px;height:33px}}
 
 /* ---------- fondo verde fijo y lienzo 3D (solo en el inicio) ---------- */
-#bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-color:var(--verde);background-image:var(--cuadros)}
+/* fondo verde degradado (el del empaque): la luz queda detrás del queso */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(62% 58% at 68% 54%,#14A851 0%,#0C9646 34%,var(--verde) 62%,#00763A 100%)}
+@media (max-width:860px){#bg{background:radial-gradient(95% 46% at 50% 70%,#14A851 0%,#0C9646 36%,var(--verde) 66%,#00763A 100%)}}
 #gl{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:0;transition:opacity .6s}
 html.gl-ready #gl{opacity:1}
 html.gl-ready #gl.off{opacity:0}
@@ -135,55 +137,12 @@ html.no-gl .hero-static img,html.reduce .hero-static img{filter:drop-shadow(0 24
 html.no-gl .hero,html.reduce .hero{height:auto;min-height:0;padding-bottom:clamp(3rem,8vh,5rem)}
 html.no-gl .hero-caps,html.no-gl .scroll-hint,html.reduce .hero-caps,html.reduce .scroll-hint{display:none}
 
-/* ---------- proceso: video de la planta a pantalla completa ----------
-   Distinto al de Famo: el video nuevo entra con un círculo que se abre desde el número gigante,
-   tinte verde Sn Roque abajo, número hueco grande y riel vertical de pasos a la derecha. */
-.proceso{position:relative;height:100svh;min-height:520px;overflow:hidden;color:#fff;background:var(--verde-4)}
-.proc-media{position:absolute;inset:0;overflow:hidden}
-.proc-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:circle(0% at 12% 82%);transform:scale(1.08);transition:clip-path 1s cubic-bezier(.65,0,.25,1),transform 7s linear;z-index:0}
-.proc-media video.prev{clip-path:circle(150% at 12% 82%);z-index:1;transition:none}
-.proc-media video.on{clip-path:circle(150% at 12% 82%);transform:scale(1);z-index:2}
-.proc-tint{position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(0deg,rgba(0,63,29,.92) 0%,rgba(0,63,29,.55) 30%,rgba(0,63,29,0) 58%),linear-gradient(180deg,rgba(0,40,18,.45) 0%,rgba(0,40,18,0) 22%)}
-.proc-ovl{position:absolute;inset:0;z-index:4;max-width:var(--maxw);margin:0 auto;padding:calc(92px + env(safe-area-inset-top,0px)) var(--gr) calc(clamp(28px,6vh,60px) + env(safe-area-inset-bottom,0px)) var(--gl);display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto 1fr auto;column-gap:clamp(1rem,3vw,2.4rem)}
-.proc-k{grid-column:1/-1;margin:0;font:900 clamp(1.4rem,2.6vw,2.1rem)/1.05 var(--display);text-shadow:0 2px 18px rgba(0,0,0,.35)}
-.proc-num{grid-row:3;align-self:end;font:900 clamp(6rem,15vw,12rem)/.8 var(--display);color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.9);display:flex;align-items:flex-end;gap:.08em;letter-spacing:-.02em}
-.proc-num small{font-size:.22em;-webkit-text-stroke:0;color:rgba(255,255,255,.75);margin-bottom:.35em}
-.pasos{grid-row:3;align-self:end;list-style:none;margin:0;padding:0;position:relative;min-height:9.5em}
-.paso{position:absolute;left:0;right:0;bottom:0;opacity:0;transform:translateY(18px);transition:opacity .45s,transform .45s;pointer-events:none;max-width:30em}
-.paso.on{opacity:1;transform:none;pointer-events:auto}
-.paso h2{font:900 clamp(2.2rem,5vw,4rem)/1 var(--display);margin:0 0 .25em}
-.paso p{margin:0;font-size:clamp(1rem,1.35vw,1.2rem);line-height:1.5;color:rgba(255,255,255,.9)}
-.proc-rail{grid-column:3;grid-row:2/4;align-self:center;display:grid;gap:.4rem;position:relative}
-.proc-rail::before{content:"";position:absolute;right:10px;top:14px;bottom:14px;width:2px;background:rgba(255,255,255,.3)}
-.proc-rail button{all:unset;cursor:pointer;display:flex;align-items:center;justify-content:flex-end;gap:.7rem;padding:.45rem 0;font:700 .95rem/1 var(--display);color:rgba(255,255,255,.7);transition:color .3s}
-.proc-rail button i{order:2;position:relative;width:22px;height:22px;border-radius:50%;background:var(--verde-4);box-shadow:inset 0 0 0 2px rgba(255,255,255,.6);transition:background .3s,box-shadow .3s,transform .3s}
-.proc-rail button.done i{background:rgba(255,255,255,.85);box-shadow:none}
-.proc-rail button.on{color:#fff}
-.proc-rail button.on i{background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.25);transform:scale(1.1)}
-.proc-rail button:focus-visible{outline:3px solid var(--focus);outline-offset:4px;border-radius:6px}
-.proc-tag{position:absolute;right:var(--gr);bottom:calc(14px + env(safe-area-inset-bottom,0px));margin:0;font:700 .76rem/1 var(--body);color:rgba(255,255,255,.72)}
-@media (max-width:860px){
-  .proc-media video{clip-path:circle(0% at 18% 78%)}
-  .proc-media video.prev,.proc-media video.on{clip-path:circle(160% at 18% 78%)}
-  .proc-ovl{grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto 1fr auto auto;padding-top:calc(80px + env(safe-area-inset-top,0px))}
-  .proc-num{grid-row:3;font-size:clamp(5rem,28vw,8rem)}
-  .pasos{grid-column:1/-1;grid-row:4;margin-top:.6rem;min-height:8.5em}
-  .paso h2{font-size:2.2rem}
-  .paso p{font-size:.98rem}
-  .proc-rail{grid-column:2;grid-row:3;align-self:end;justify-self:end}
-  .proc-rail button{font-size:.82rem;padding:.3rem 0}
-  .proc-rail button i{width:18px;height:18px}
-  .proc-rail::before{right:8px}
-  .proc-tag{display:none}
-}
-html.reduce .proceso,html.no-gsap .proceso{height:auto;min-height:100svh}
-
 /* entrada del inicio sin pantalla de carga: el texto aparece solo con CSS al pintar la página */
 @keyframes sube{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .hero-h1,.hero-sub,.hero-cta,.scroll-hint>*{animation:sube .8s cubic-bezier(.2,.8,.2,1) both}
 .hero-h1{animation-delay:.05s}.hero-sub{animation-delay:.15s}.hero-cta{animation-delay:.32s}.scroll-hint>*{animation-delay:.6s}
 
-/* ---------- familias (carril con el scroll, también en celular) ---------- */
+/* ---------- familias (computadora: carril con el scroll · celular: se desliza con el dedo) ---------- */
 .familias{background:var(--bg);color:var(--ink);padding-block:calc(84px + env(safe-area-inset-top,0px)) 0;position:relative;overflow:hidden}
 .familias-head{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gl) var(--gr);display:grid;gap:.1rem}
 .familias .script{color:var(--acc)}
@@ -212,11 +171,22 @@ html.reduce .proceso,html.no-gsap .proceso{height:auto;min-height:100svh}
 .fam-prog{max-width:var(--maxw);margin:0 auto 1.4rem;padding-inline:var(--gl) var(--gr)}
 .fam-prog span{display:block;height:3px;border-radius:3px;background:var(--line);overflow:hidden;position:relative}
 .fam-prog span::after{content:"";position:absolute;inset:0;transform-origin:left;transform:scaleX(var(--p,0));background:var(--acc)}
+.fam-hint{display:none}
+@keyframes famhint{0%,100%{transform:none}50%{transform:translateX(5px)}}
+@media (prefers-reduced-motion:reduce){.fam-hint b{animation:none}}
 @media (max-width:860px){
-  .familias{padding-top:calc(70px + env(safe-area-inset-top,0px));min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+  .familias{padding-top:calc(70px + env(safe-area-inset-top,0px));padding-bottom:1.2rem}
   .familias .lead{font-size:.98rem}
+  .fam-wrap{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gl);-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none;touch-action:pan-x pan-y}
+  .fam-wrap::-webkit-scrollbar{display:none}
   .fam-track{gap:.9rem}
-  .fam{height:min(calc(100svh - 320px),100vw);min-height:280px}
+  .fam{height:min(60svh,420px);min-height:280px;scroll-snap-align:start}
+  .fam-end{scroll-snap-align:end}
+  .fam-prog{display:flex;align-items:center;gap:.8rem}
+  .fam-prog span{flex:1}
+  .fam-hint{display:block;font:700 .8rem/1 var(--display);color:var(--acc);white-space:nowrap;transition:opacity .4s}
+  .fam-hint b{display:inline-block;animation:famhint 1.2s ease-in-out infinite}
+  .familias.movido .fam-hint{opacity:0}
   .fam-txt{padding:1rem 1.05rem 1.05rem}
   .fam-txt .fam-frase{font-size:.88rem}
 }
@@ -464,7 +434,7 @@ html.reduce .negocio,html.no-gsap .negocio{min-height:0;padding-top:clamp(4rem,9
 @media (max-width:379px){.tkw{width:184px;margin-left:10px}.tk{font-size:9.3px;padding:12px 12px 20px}.tk-call{left:calc(100% + 13px);top:85px;max-width:96px;font-size:11.5px;padding:8px 9px}}
 
 /* ================= v7: página de marca, sólida ================= */
-.proceso .h2,.leche .h2,.contacto .h2{color:#fff}
+.leche .h2,.contacto .h2{color:#fff}
 .familias{background:var(--bg)}
 .familias .h2{margin-bottom:.3em}
 .fam-end h3{color:var(--acc)}
@@ -561,9 +531,9 @@ html.av-open{overflow:hidden}
 /* ---------- rueda fija (imagen) mientras se descarga la escena 3D; se desvanece cuando el 3D ya pinta ---------- */
 .hero-inner{position:relative;z-index:1}
 .hero-poster{position:absolute;inset:0;z-index:0;pointer-events:none;transition:opacity .6s}
-.hero-poster img{position:absolute;max-width:none;height:auto;left:calc(50% - 38.743svh);top:calc(50svh + 8.852svh);width:75.628svh}
-@media (min-width:860px){.hero-poster img{left:calc(50% - 23.828svh);top:calc(50svh - 18.099svh);width:97.005svh}}
-@media (min-width:1200px){.hero-poster img{left:calc(50% - 20.5svh);top:calc(50svh - 18.389svh);width:115.278svh}}
+.hero-poster img{position:absolute;max-width:none;height:auto;left:calc(50% - 37.650svh);top:calc(50svh + 9.071svh);width:78.689svh}
+@media (min-width:860px){.hero-poster img{left:calc(50% - 22.852svh);top:calc(50svh - 21.549svh);width:100.911svh}}
+@media (min-width:1200px){.hero-poster img{left:calc(50% - 19.500svh);top:calc(50svh - 22.111svh);width:118.889svh}}
 html.gl-ready .hero-poster{opacity:0}
 html.no-gl .hero-poster,html.reduce .hero-poster{display:none}
 

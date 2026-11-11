@@ -187,19 +187,10 @@ function setRuta(p){
 window.addEventListener('resize',sizeRuta);
 sizeRuta();
 
-// ====================== proceso: video a pantalla completa, un paso por cuarto de recorrido ======================
-const pasos=$$('.paso'), pVids=$$('.proc-media video'), rail=$$('.proc-rail button'), procN=$('#proc-n');
-alFinal.push(()=>lejos(pVids,'150% 0px'));
-let pasoI=-1, procCerca=false; // procCerca: la sección está en pantalla o por llegar
-function setPaso(i){ if(i===pasoI) return; const prev=pasoI; pasoI=i;
-  pasos.forEach((p,k)=>p.classList.toggle('on',k===i));
-  rail.forEach((b,k)=>{ b.classList.toggle('on',k===i); b.classList.toggle('done',k<i); b.setAttribute('aria-current',k===i?'step':'false'); });
-  procN.textContent=String(i+1);
-  pVids.forEach((v,k)=>{ v.classList.toggle('prev',k===prev); const on=k===i; v.classList.toggle('on',on);
-    if(on && procCerca){ hidratar(v); if(v.preload!=='auto') v.preload='auto'; if(!reduce) v.play().catch(()=>{}); }
-    else if(k!==prev) v.pause(); });
-  if(prev>=0) setTimeout(()=>{ const pv=pVids[prev]; if(pasoI!==prev){ pv.classList.remove('prev'); pv.pause(); } },1050); }
-alFinal.push(()=>{ if('IntersectionObserver' in window){ new IntersectionObserver(es=>es.forEach(e=>{ procCerca=e.isIntersecting; if(e.isIntersecting){ pVids.forEach(v=>{ hidratar(v); if(v.preload==='none') v.preload='metadata'; }); const v=pVids[Math.max(0,pasoI)]; v.preload='auto'; if(!reduce) v.play().catch(()=>{}); } else pVids.forEach(v=>v.pause()); }),{rootMargin:'30% 0px'}).observe($('#proceso')); } });
+// carril de familias deslizable con el dedo: la barra de avance sigue al deslizamiento
+const famWrap=$('.fam-wrap'), famBar=$('.fam-prog span'), famSec=$('#familias');
+famWrap.addEventListener('scroll',()=>{ const max=famWrap.scrollWidth-famWrap.clientWidth; if(max<=0) return;
+  famBar.style.setProperty('--p',(famWrap.scrollLeft/max).toFixed(3)); if(famWrap.scrollLeft>24) famSec.classList.add('movido'); },{passive:true});
 
 await ceder();
 // ====================== 3D (solo el queso del inicio) + scroll ======================
@@ -245,7 +236,6 @@ if(hasGsap && typeof Lenis!=='undefined' && !reduce){
   gsap.ticker.lagSmoothing(0);
 }
 
-setPaso(0);
 if(hasGsap && !reduce){
   if(glOK){
     // --- INICIO: la rueda se abre ---
@@ -264,16 +254,14 @@ if(hasGsap && !reduce){
     gsap.to('.scroll-hint',{opacity:0,ease:'none',scrollTrigger:{trigger:'#inicio',start:'top top',end:'+=25%',scrub:true}});
   }
   await ceder();
-  // --- PROCESO: pantalla completa, cada cuarto del recorrido es un paso ---
-  const procST=ScrollTrigger.create({trigger:'#proceso',start:'top top',end:'+=300%',pin:true,anticipatePin:1,onUpdate:(self)=>setPaso(Math.min(3,Math.floor(self.progress*4)))});
-  rail.forEach((b,k)=>b.addEventListener('click',()=>{ const y=procST.start+(procST.end-procST.start)*(k+.5)/4; if(window.lenis) window.lenis.scrollTo(y,{duration:1}); else window.scrollTo({top:y,behavior:'smooth'}); }));
-
-  await ceder();
-  // --- FAMILIAS: carril con el scroll (igual en celular y en compu) ---
-  const track=$('#fam-track'), famBar=$('.fam-prog span');
-  const famDist=()=>Math.max(0,track.scrollWidth-window.innerWidth);
-  gsap.to(track,{x:()=>-famDist(),ease:'none',scrollTrigger:{trigger:'#familias',start:'top top',end:()=>'+='+Math.max(famDist(),1),pin:true,scrub:mobile()?.35:.8,anticipatePin:1,invalidateOnRefresh:true,
-    onUpdate:(self)=>famBar.style.setProperty('--p',self.progress.toFixed(3))}});
+  // --- FAMILIAS: en computadora el carril avanza con el scroll; en celular se desliza con el dedo ---
+  const track=$('#fam-track');
+  gsap.matchMedia().add('(min-width:860px)',()=>{
+    const famDist=()=>Math.max(0,track.scrollWidth-window.innerWidth);
+    gsap.to(track,{x:()=>-famDist(),ease:'none',scrollTrigger:{trigger:'#familias',start:'top top',end:()=>'+='+Math.max(famDist(),1),pin:true,scrub:.8,anticipatePin:1,invalidateOnRefresh:true,
+      onUpdate:(self)=>famBar.style.setProperty('--p',self.progress.toFixed(3))}});
+    return ()=>{ gsap.set(track,{clearProps:'transform'}); famBar.style.setProperty('--p','0'); };
+  });
 
   await ceder();
   // --- recetas: los dos videos suben a distinto ritmo ---
@@ -295,7 +283,6 @@ if(hasGsap && !reduce){
   if(document.fonts && document.fonts.status!=='loaded') document.fonts.ready.then(()=>{ sizeRuta(); ScrollTrigger.refresh(); });
 }else{
   // sin animaciones: todo queda quieto y legible
-  rail.forEach((b,k)=>b.addEventListener('click',()=>setPaso(k)));
   setRuta(1);
 }
 

@@ -3,9 +3,8 @@
 Página de **Quesos Sn Roque** (marca de Famo Alimentos S.A. de C.V.).
 
 **Contenido de la página:**
-- Un queso 3D que se abre con el scroll.
-- El proceso de la planta en video, a pantalla completa.
-- Las 10 familias de producto con sus 42 presentaciones.
+- Un queso Ranchero 3D que se parte con el scroll y deja ver el queso por dentro.
+- Las 10 familias de producto con sus 42 presentaciones (en celular el carril se desliza con el dedo).
 - Recetas en video.
 - Ruta de reparto para negocios.
 - Alta de clientes por WhatsApp.
@@ -32,7 +31,7 @@ Para volver a medir cuando ya esté en línea, usa https://pagespeed.web.dev con
 - **Sin servicios de terceros:** las librerías (three.js, GSAP, Lenis) y las tipografías se sirven desde el mismo sitio, sin CDN ni Google Fonts.
 - **Lo primero que se pinta es el inicio:** el título y una imagen de la rueda de queso. El resto de la página se arma después, en pedacitos, para que el celular no se trabe.
 - **El queso 3D se descarga al primer gesto** (mover el mouse, tocar o desplazar) o cuando el navegador queda libre. La imagen fija ocupa exactamente su lugar, así que el cambio no se nota. En equipos sin tarjeta de video el 3D se omite y se queda la imagen.
-- **Los videos se cargan solo al acercarse a su sección:** tanto el archivo como su portada.
+- **Los videos de recetas se cargan solo al acercarse a su sección:** tanto el archivo como su portada.
 - **Imágenes en WebP con tamaños para cada pantalla** (`srcset`), con ancho y alto declarados para que nada brinque.
 - **El CSS va dentro de la página y las tipografías se precargan.**
 
@@ -52,7 +51,6 @@ docs/                  ← lo que se publica (no editar index.html a mano: se ge
   assets/prod/         fotos de empaque por SKU (820 px, s/ = 400 px, t/ = 128 px)
   assets/fam/          fotos fuera del empaque para cada familia
   assets/video/        recetas (Oaxaca, Asadero, Panela, Ranchero, Pizza, Chiles)
-  assets/proceso/      tomas de la planta (Leche, Cuajada, Hilado, Empaque)
   robots.txt, sitemap.xml, site.webmanifest, 404.html, .nojekyll  (generados)
 src/
   index.html           plantilla (head, SEO, precargas)
@@ -60,7 +58,7 @@ src/
   styles.css, fonts.css
   app.js               comportamiento (scroll, familias, formulario, aviso, videos)
   data.js              catálogo: 42 presentaciones, 10 familias, características
-  scene.js             queso 3D (three.js)
+  scene.js             queso Ranchero 3D (three.js)
 scripts/
   build.mjs            arma docs/ a partir de src/
   serve.mjs            servidor local igual a GitHub Pages
