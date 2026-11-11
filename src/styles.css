@@ -18,20 +18,7 @@
   --maxw:1200px; --r:18px;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#0B1510; --soft:#0F1C15; --paper:#122019; --cream:#0F1C15; --line:#22362A; --ink:#ECF3EE; --ink-2:#9DB0A4;
-    --acc:#3DBE73; --acc-2:#6FD39A; --chip:rgba(0,132,61,.22); --sec:var(--verde-3); --shadow:rgba(0,0,0,.55);
-    --road:#1A2B21; --stem:#2B4234;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0B1510; --soft:#0F1C15; --paper:#122019; --cream:#0F1C15; --line:#22362A; --ink:#ECF3EE; --ink-2:#9DB0A4;
-  --acc:#3DBE73; --acc-2:#6FD39A; --chip:rgba(0,132,61,.22); --sec:var(--verde-3); --shadow:rgba(0,0,0,.55);
-  --road:#1A2B21; --stem:#2B4234;
-  color-scheme:dark;
-}
+/* colores fijos: la página se ve igual con el navegador en modo claro u oscuro */
 html{scroll-behavior:auto;-webkit-text-size-adjust:100%}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
@@ -525,7 +512,6 @@ html.av-open{overflow:hidden}
 @keyframes avfade{from{opacity:0}to{opacity:1}}
 @keyframes avin{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
 @media (max-width:640px){.aviso{padding:0;place-items:stretch}.av-box{width:100%;max-height:none;height:100%;border-radius:0;padding-top:env(safe-area-inset-top,0px)}.av-box header{padding:18px 18px 14px}.av-box h2{font-size:1.5rem}.av-body{padding:4px 18px 20px}.av-foot2{padding-inline:18px}.av-ok{flex:1}}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .av-box{background:#0F1D15;color:#E6EFE9}:root:not([data-theme="light"]) .av-box header,:root:not([data-theme="light"]) .av-foot2{border-color:#24382C}:root:not([data-theme="light"]) .av-box h2,:root:not([data-theme="light"]) .av-body h3{color:#7FD3A2}:root:not([data-theme="light"]) .av-k,:root:not([data-theme="light"]) .av-body a{color:#7FD3A2}:root:not([data-theme="light"]) .av-body{color:#C3D2C9}:root:not([data-theme="light"]) .av-body b{color:#fff}:root:not([data-theme="light"]) .av-box header small{color:#9FB2A6}:root:not([data-theme="light"]) .av-x{background:#18291F;border-color:#24382C;color:#E6EFE9}}
 @media (prefers-reduced-motion:reduce){.aviso.on,.aviso.on .av-box{animation:none}}
 
 /* ---------- rueda fija (imagen) mientras se descarga la escena 3D; se desvanece cuando el 3D ya pinta ---------- */
